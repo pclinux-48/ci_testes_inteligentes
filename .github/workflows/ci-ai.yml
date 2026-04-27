@@ -37,11 +37,13 @@ jobs:
 
       - name: PASSED status
         if: success()
-        run: 'echo "PASSED: testes com apoio de IA executados com sucesso."'
+        run: |
+          echo "PASSED: testes com apoio de IA executados com sucesso."
 
       - name: FAILED status
         if: failure()
-        run: 'echo "FAILED: houve falha nos testes com apoio de IA."'
+        run: |
+          echo "FAILED: houve falha nos testes com apoio de IA."
 
       - name: Upload AI artifacts
         if: always()

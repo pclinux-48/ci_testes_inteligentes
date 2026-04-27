@@ -34,11 +34,13 @@ jobs:
 
       - name: PASSED status
         if: success()
-        run: 'echo "PASSED: testes manuais executados com sucesso."'
+        run: |
+          echo "PASSED: testes manuais executados com sucesso."
 
       - name: FAILED status
         if: failure()
-        run: 'echo "FAILED: houve falha nos testes manuais."'
+        run: |
+          echo "FAILED: houve falha nos testes manuais."
 
       - name: Upload manual artifacts
         if: always()
