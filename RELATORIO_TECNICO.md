@@ -1,0 +1,35 @@
+# Relatorio Tecnico Simplificado
+
+- Titulo da atividade: Elaboracao e execucao de duas pipelines de CI e automacao de testes
+- Disciplina: Qualidade de Software
+- Estudante: Paulo César Pereira
+
+## Introducao
+
+O objetivo desta atividade foi implementar duas pipelines de Integracao Continua com GitHub Actions e automatizar testes de interface em uma aplicacao web publica. A ferramenta escolhida foi o Playwright, por oferecer boa integracao com Node.js, execucao headless em CI, relatorios HTML e suporte nativo ao navegador Chromium. A aplicacao-alvo selecionada foi o site Automation Exercise, pois possui funcionalidades de cadastro, login e navegacao por menus, atendendo aos requisitos da proposta.
+
+## Configuracao das pipelines
+
+Foram criadas duas pipelines independentes no GitHub Actions. A primeira pipeline executa os testes manuais e a segunda executa os testes com apoio de IA. Ambas sao disparadas em pushes para branches secundarias e em pull requests destinados a main ou master. Em cada execucao, o workflow instala dependencias com cache, instala o Chromium, executa os testes e publica artefatos como logs, relatorio HTML e evidencias de falha por 7 dias.
+
+## Implementacao dos testes
+
+Na versao manual, foram implementados dois testes principais. O primeiro realiza o cadastro de um novo usuario, valida o login e em seguida exclui a conta criada. O segundo acessa a pagina de produtos, realiza uma busca por item e abre a pagina de detalhes do produto encontrado. Esses testes foram escritos com seletores diretos e validacoes objetivas.
+
+Na versao com apoio de IA, os dois testes foram construidos com suporte de IA generativa para sugerir cenarios, validacoes e alternativas de seletores. Alem disso, foi criada uma camada de localizadores resilientes com fallbacks, inspirada em tecnicas de auto-healing. O primeiro teste automatiza o cadastro completo com seletores semanticos e alternativos. O segundo cobre login e navegacao, priorizando localizacao robusta dos elementos.
+
+## Coleta automatica de metricas
+
+Como complemento a execucao dos testes, foi implementada nas duas pipelines uma etapa automatica de coleta e consolidacao de metricas. A partir do relatorio JSON gerado pelo Playwright, cada workflow passa a produzir um resumo estruturado contendo a quantidade de testes executados, aprovados, falhos, ignorados e flaky, bem como o tempo total de execucao, o tempo medio por teste e a taxa de sucesso da execucao. Tambem sao contabilizadas as evidencias geradas durante os testes, como screenshots, videos e traces, quando existentes.
+
+Outra informacao registrada automaticamente foi a cobertura funcional dos cenarios executados. Nesse contexto, a cobertura nao representa cobertura de codigo-fonte, mas sim a verificacao objetiva dos fluxos funcionais contemplados pelos testes automatizados. Assim, a pipeline manual registra a cobertura dos cenarios de cadastro, login, exclusao de conta, navegacao e busca de produtos, enquanto a pipeline com apoio de IA registra esses mesmos fluxos sob uma estrategia de localizacao mais resiliente. Esses resumos sao publicados como artefatos do workflow e tambem aparecem no resumo da execucao do GitHub Actions, o que facilita a comparacao entre as duas abordagens.
+
+## Analise comparativa
+
+A abordagem manual apresentou implementacao mais direta e facil de entender, porem com maior dependencia de seletores especificos, o que pode aumentar o custo de manutencao quando a interface muda. A abordagem com apoio de IA trouxe ganho de produtividade na escrita dos testes e maior resiliencia por meio de fallbacks de localizacao. Em contrapartida, exigiu validacao humana cuidadosa para evitar sugestoes incorretas ou excessivamente genericas.
+
+Durante a execucao, ambas as pipelines conseguiram automatizar a validacao dos fluxos essenciais da aplicacao. Alem da aprovacao ou falha dos testes, foi possivel observar de forma objetiva metricas como tempo total, duracao media por teste, taxa de sucesso e cobertura funcional dos cenarios executados. Em termos de tempo, a diferenca entre as duas abordagens ficou pequena, pois ambas executam sobre o mesmo framework. A principal vantagem da IA ficou na aceleracao da autoria, no reforco da manutencao e na maior robustez dos seletores, e nao necessariamente na reducao do tempo bruto de execucao.
+
+## Conclusao
+
+Conclui-se que o uso de IA na automacao de testes pode aumentar a produtividade, sugerir cenarios relevantes e ajudar na criacao de seletores mais robustos. Entretanto, a IA nao substitui o conhecimento tecnico do QA, pois ainda e necessario revisar cenarios, validar seletores e interpretar corretamente os resultados. Como melhoria futura, seria interessante integrar uma ferramenta externa de auto-healing ou analise visual com IA, como Healenium ou Applitools Eyes, para ampliar a comparacao entre abordagens.
