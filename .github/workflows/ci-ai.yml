@@ -1,0 +1,55 @@
+name: CI AI-Assisted Tests
+
+on:
+  push:
+    branches-ignore:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+
+jobs:
+  ai-tests:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Run AI-assisted Playwright tests
+        shell: bash
+        run: |
+          set -o pipefail
+          npm run test:ai 2>&1 | tee ai-test-output.log
+
+      - name: PASSED status
+        if: success()
+        run: echo "PASSED: testes com apoio de IA executados com sucesso."
+
+      - name: FAILED status
+        if: failure()
+        run: echo "FAILED: houve falha nos testes com apoio de IA."
+
+      - name: Upload AI artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ai-test-artifacts
+          path: |
+            playwright-report/
+            test-results/
+            ai-test-output.log
+          retention-days: 7

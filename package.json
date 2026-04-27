@@ -1,15 +1,26 @@
 {
   "name": "ci_testes_inteligentes",
   "version": "1.0.0",
-  "description": "",
+  "description": "Projeto de pipelines de CI com Playwright, GitHub Actions e testes assistidos por IA.",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "npx playwright test tests/manual.spec.ts tests/ai.spec.ts",
+    "test:manual": "npx playwright test tests/manual.spec.ts",
+    "test:manual:headed": "npx playwright test tests/manual.spec.ts --project=chromium --headed",
+    "test:manual:debug": "PWDEBUG=1 npx playwright test tests/manual.spec.ts --project=chromium",
+    "test:ai": "npx playwright test tests/ai.spec.ts",
+    "test:ai:headed": "npx playwright test tests/ai.spec.ts --project=chromium --headed",
+    "test:ai:debug": "PWDEBUG=1 npx playwright test tests/ai.spec.ts --project=chromium",
+    "report": "npx playwright show-report",
+    "report:pdf": "node scripts/generate-report-pdf.js"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
     "@playwright/test": "^1.59.1",
-    "@types/node": "^25.6.0"
+    "@types/node": "^25.6.0",
+    "dotenv": "^17.4.2"
   }
 }
