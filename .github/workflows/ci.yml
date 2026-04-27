@@ -1,0 +1,52 @@
+name: CI Manual Tests
+on:
+  push:
+    branches-ignore:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+jobs:
+  manual-tests:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Run manual Playwright tests
+        shell: bash
+        run: |
+          set -o pipefail
+          npm run test:manual 2>&1 | tee manual-test-output.log
+
+      - name: PASSED status
+        if: success()
+        run: echo "PASSED: testes manuais executados com sucesso."
+
+      - name: FAILED status
+        if: failure()
+        run: echo "FAILED: houve falha nos testes manuais."
+
+      - name: Upload manual artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: manual-test-artifacts
+          path: |
+            playwright-report/
+            test-results/
+            manual-test-output.log
+          retention-days: 7
