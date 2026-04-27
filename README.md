@@ -115,6 +115,22 @@ npm run report
 - executa `npm run test:ai`
 - publica `logs`, `test-results` e `playwright-report` por 7 dias
 
+## Metricas Coletadas
+
+As duas pipelines geram automaticamente um resumo de metricas com base no relatorio JSON do Playwright.
+
+As metricas registradas incluem:
+
+- quantidade de testes executados
+- quantidade de testes aprovados, falhos, ignorados e flaky
+- tempo total de execucao
+- tempo medio por teste
+- taxa de sucesso da execucao
+- quantidade de evidencias geradas, como screenshots, videos e traces
+- cobertura funcional dos cenarios automatizados
+
+Os resumos sao gerados na pasta `metrics/`, publicados como artefatos do GitHub Actions e tambem exibidos no resumo da execucao de cada workflow.
+
 ## Testes implementados
 
 ### Testes manuais
