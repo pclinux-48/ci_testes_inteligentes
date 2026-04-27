@@ -1,7 +1,7 @@
 # Relatorio Tecnico Simplificado
 
 - Titulo da atividade: Elaboracao e execucao de duas pipelines de CI e automacao de testes
-- Disciplina: Qualidade de Software
+- Disciplina: Engenharia de Software
 - Estudante: Paulo César Pereira
 
 ## Introducao
