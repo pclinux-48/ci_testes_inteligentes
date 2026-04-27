@@ -44,6 +44,16 @@ jobs:
         run: |
           echo "FAILED: houve falha nos testes manuais."
 
+      - name: Generate metrics summary
+        if: always()
+        run: |
+          node scripts/summarize-metrics.js \
+            --suite manual \
+            --name "CI Manual Tests" \
+            --input test-results/results.json \
+            --output-dir metrics \
+            --artifacts-path test-results
+
       - name: Upload manual artifacts
         if: always()
         uses: actions/upload-artifact@v6
@@ -52,5 +62,6 @@ jobs:
           path: |
             playwright-report/
             test-results/
+            metrics/
             manual-test-output.log
           retention-days: 7

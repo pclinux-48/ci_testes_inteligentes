@@ -47,6 +47,16 @@ jobs:
         run: |
           echo "FAILED: houve falha nos testes com apoio de IA."
 
+      - name: Generate metrics summary
+        if: always()
+        run: |
+          node scripts/summarize-metrics.js \
+            --suite ai \
+            --name "CI AI-Assisted Tests" \
+            --input test-results/results.json \
+            --output-dir metrics \
+            --artifacts-path test-results
+
       - name: Upload AI artifacts
         if: always()
         uses: actions/upload-artifact@v6
@@ -55,5 +65,6 @@ jobs:
           path: |
             playwright-report/
             test-results/
+            metrics/
             ai-test-output.log
           retention-days: 7

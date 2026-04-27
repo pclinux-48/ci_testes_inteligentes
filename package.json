@@ -11,6 +11,8 @@
     "test:ai": "npx playwright test tests/ai.spec.ts",
     "test:ai:headed": "npx playwright test tests/ai.spec.ts --project=chromium --headed",
     "test:ai:debug": "PWDEBUG=1 npx playwright test tests/ai.spec.ts --project=chromium",
+    "metrics:manual": "node scripts/summarize-metrics.js --suite manual --name \"CI Manual Tests\" --input test-results/results.json --output-dir metrics --artifacts-path test-results",
+    "metrics:ai": "node scripts/summarize-metrics.js --suite ai --name \"CI AI-Assisted Tests\" --input test-results/results.json --output-dir metrics --artifacts-path test-results",
     "report": "npx playwright show-report",
     "report:pdf": "node scripts/generate-report-pdf.js"
   },

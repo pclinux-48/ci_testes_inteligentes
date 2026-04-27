@@ -8,6 +8,7 @@ node_modules/
 /playwright/.auth/
 playwright-report/
 test-results/
+metrics/
 *.log
 .env
 .DS_Store
